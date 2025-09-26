@@ -176,7 +176,18 @@ if (isset($_GET['delete_all'])) {
             </div>
 
             <div class="cart-btn">
-                <a href="https://wa.me/6285157756604" class="btn <?php echo ($grand_total > 1) ? '' : 'disabled'; ?>">checkout</a>
+                <?php
+                $checkout_message = "Halo mimin, saya ingin checkout:\n\n";
+                $checkout_message .= "Nama: " . $fetch_user['name'] . "\n";
+                $checkout_message .= "Email: " . $fetch_user['email'] . "\n\n";
+                $checkout_message .= "Pesanan:\n";
+                $cart_query_checkout = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
+                while ($fetch_cart_checkout = mysqli_fetch_assoc($cart_query_checkout)) {
+                    $checkout_message .= "- " . $fetch_cart_checkout['name'] . " (Size: " . $fetch_cart_checkout['size'] . ", Jumlah: " . $fetch_cart_checkout['quantity'] . ", Price: Rp. " . $fetch_cart_checkout['price'] . ")\n";
+                }
+                $checkout_message .= "\nTotal: Rp. " . $grand_total;
+                ?>
+                <a href="https://wa.me/6285157756604?text=<?php echo urlencode($checkout_message); ?>" class="btn <?php echo ($grand_total > 1) ? '' : 'disabled'; ?>" <?php echo ($grand_total > 1) ? '' : 'onclick="return false;"'; ?>>checkout</a>
             </div>
 
         </div>

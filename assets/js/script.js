@@ -57,7 +57,7 @@ document.getElementById("addProductForm").addEventListener("submit", function (e
 
   const newProduct = {
     name: productName,
-    price: 15000, // Misalnya harga tetap 15000
+    price: 15000, 
   };
 
   fetch("http://localhost:8000/api/product", {
