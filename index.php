@@ -29,7 +29,7 @@
     <div class="navbar-nav">
       <a href="#">Home</a>
       <a href="#about">Tentang Kami</a>
-      <a href="#menu">Favorit</a>
+      <a href="#menu">Produk</a>
       <a href="#contact">Kontak</a>
     </div>
 
@@ -77,7 +77,7 @@
 
   <!--Menu Section start-->
   <section id="menu" class="menu">
-    <h2><span>Daftar</span> Favorit</h2>
+    <h2><span>Produk</span> Kami</h2>
     <p>Inilah The Dream Team di rak sepatu kami. Setiap pasang bukan hanya alas kaki, tapi cerita dan vibe yang berbeda. Mana nih pair adidas favoritmu?</p>
     <div class="row">
       <div class="menu-card">

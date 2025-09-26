@@ -20,13 +20,14 @@ if (isset($_POST['add_to_cart'])) {
     $product_price = $_POST['product_price'];
     $product_image = $_POST['product_image'];
     $product_quantity = $_POST['product_quantity'];
+    $product_size = $_POST['product_size'];
 
-    $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
+    $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND size = '$product_size' AND user_id = '$user_id'") or die('query failed');
 
     if (mysqli_num_rows($select_cart) > 0) {
         $message[] = 'product already added to cart!';
     } else {
-        mysqli_query($conn, "INSERT INTO `cart`(user_id, name, price, image, quantity) VALUES('$user_id', '$product_name', '$product_price', '$product_image', '$product_quantity')") or die('query failed');
+        mysqli_query($conn, "INSERT INTO `cart`(user_id, name, price, image, quantity, size) VALUES('$user_id', '$product_name', '$product_price', '$product_image', '$product_quantity', '$product_size')") or die('query failed');
         $message[] = 'product added to cart!';
     }
 };
@@ -96,7 +97,7 @@ if (isset($_GET['delete_all'])) {
 
         <div class="products">
 
-            <h1 class="heading">latest products</h1>
+            <h1 class="heading">Produk</h1>
 
             <div class="box-container">
 
@@ -108,8 +109,18 @@ if (isset($_GET['delete_all'])) {
                         <form method="post" class="box" action="">
                             <img src="image/<?php echo $fetch_product['image']; ?>" alt="">
                             <div class="name"><?php echo $fetch_product['name']; ?></div>
-                            <div class="price">Rp.<?php echo $fetch_product['price']; ?></div>
+                            <div class="price">Rp. <?php echo $fetch_product['price']; ?></div>
                             <input type="number" min="1" name="product_quantity" value="1">
+                            <select name="product_size" required>
+                                <option value="">Select Size</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                            </select>
                             <input type="hidden" name="product_image" value="<?php echo $fetch_product['image']; ?>">
                             <input type="hidden" name="product_name" value="<?php echo $fetch_product['name']; ?>">
                             <input type="hidden" name="product_price" value="<?php echo $fetch_product['price']; ?>">
@@ -126,55 +137,46 @@ if (isset($_GET['delete_all'])) {
 
         <div class="shopping-cart">
 
-            <h1 class="heading">shopping cart</h1>
+            <h1 class="heading">Keranjang belanja</h1>
 
-            <table>
-                <thead>
-                    <th>image</th>
-                    <th>name</th>
-                    <th>price</th>
-                    <th>quantity</th>
-                    <th>total price</th>
-                    <th>action</th>
-                </thead>
-                <tbody>
-                    <?php
-                    $cart_query = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
-                    $grand_total = 0;
-                    if (mysqli_num_rows($cart_query) > 0) {
-                        while ($fetch_cart = mysqli_fetch_assoc($cart_query)) {
-                    ?>
-                            <tr>
-                                <td><img src="image/<?php echo $fetch_cart['image']; ?>" height="100" alt=""></td>
-                                <td><?php echo $fetch_cart['name']; ?></td>
-                                <td>Rp.<?php echo $fetch_cart['price']; ?></td>
-                                <td>
-                                    <form action="" method="post">
-                                        <input type="hidden" name="cart_id" value="<?php echo $fetch_cart['id']; ?>">
-                                        <input type="number" min="1" name="cart_quantity" value="<?php echo $fetch_cart['quantity']; ?>">
-                                        <input type="submit" name="update_cart" value="update" class="option-btn">
-                                    </form>
-                                </td>
-                                <td>Rp.<?php echo $sub_total = ($fetch_cart['price'] * $fetch_cart['quantity']); ?></td>
-                                <td><a href="cart.php ?remove=<?php echo $fetch_cart['id']; ?>" class="delete-btn" onclick="return confirm('remove item from cart?');">remove</a></td>
-                            </tr>
-                    <?php
-                            $grand_total += $sub_total;
-                        }
-                    } else {
-                        echo '<tr><td style="padding:20px; text-transform:capitalize;" colspan="6">no item added</td></tr>';
+            <div class="cart-items">
+                <?php
+                $cart_query = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
+                $grand_total = 0;
+                if (mysqli_num_rows($cart_query) > 0) {
+                    while ($fetch_cart = mysqli_fetch_assoc($cart_query)) {
+                ?>
+                        <div class="cart-item">
+                            <img src="image/<?php echo $fetch_cart['image']; ?>" alt="">
+                            <div class="item-details">
+                                <h3><?php echo $fetch_cart['name']; ?></h3>
+                                <p class="size">Size: <?php echo $fetch_cart['size']; ?></p>
+                                <p class="price">Rp. <?php echo $fetch_cart['price']; ?></p>
+                                <form action="" method="post" class="quantity-form">
+                                    <input type="hidden" name="cart_id" value="<?php echo $fetch_cart['id']; ?>">
+                                    <input type="number" min="1" name="cart_quantity" value="<?php echo $fetch_cart['quantity']; ?>">
+                                    <input type="submit" name="update_cart" value="update" class="option-btn">
+                                </form>
+                                <p class="total">Total: Rp.<?php echo $sub_total = ($fetch_cart['price'] * $fetch_cart['quantity']); ?></p>
+                                <a href="cart.php?remove=<?php echo $fetch_cart['id']; ?>" class="delete-btn" onclick="return confirm('remove item from cart?');">remove</a>
+                            </div>
+                        </div>
+                <?php
+                        $grand_total += $sub_total;
                     }
-                    ?>
-                    <tr class="table-bottom">
-                        <td colspan="4">grand total :</td>
-                        <td>Rp.<?php echo $grand_total; ?></td>
-                        <td><a href="cart.php?delete_all" onclick="return confirm('delete all from cart?');" class="delete-btn <?php echo ($grand_total > 1) ? '' : 'disabled'; ?>">delete all</a></td>
-                    </tr>
-                </tbody>
-            </table>
+                } else {
+                    echo '<div class="empty-cart">no item added</div>';
+                }
+                ?>
+            </div>
+
+            <div class="cart-total">
+                <p>Grand Total: Rp.<?php echo $grand_total; ?></p>
+                <a href="cart.php?delete_all" onclick="return confirm('delete all from cart?');" class="delete-btn <?php echo ($grand_total > 1) ? '' : 'disabled'; ?>">delete all</a>
+            </div>
 
             <div class="cart-btn">
-                <a href="#" class="btn <?php echo ($grand_total > 1) ? '' : 'disabled'; ?>">proceed to checkout</a>
+                <a href="https://wa.me/6285157756604" class="btn <?php echo ($grand_total > 1) ? '' : 'disabled'; ?>">checkout</a>
             </div>
 
         </div>

@@ -6,7 +6,7 @@
    --orange:#f39c12;
    --black:#333;
    --white:#fff;
-   --light-bg:#eee;
+   --light-bg:#000;
    --box-shadow:0 5px 10px rgba(0,0,0,.1);
    --border:2px solid var(--black);
 }
@@ -141,14 +141,14 @@ body{
    margin-bottom: 20px;
    font-size: 40px;
    text-transform: uppercase;
-   color:var(--black);
+   color:var(--white);
 }
 
 .container .user-profile{
    padding:20px;
    text-align: center;
    border:var(--border);
-   background-color: var(--white);
+   background-color: var(--light-bg);
    box-shadow: var(--box-shadow);
    border-radius: 5px;
    margin:20px auto;
@@ -158,7 +158,7 @@ body{
 .container .user-profile p{
    margin-bottom: 10px;
    font-size: 25px;
-   color:var(--black);
+   color:var(--white);
 }
 
 .container .user-profile p span{
@@ -187,7 +187,7 @@ body{
    border:var(--border);
    position: relative;
    padding:20px;
-   background-color: var(--white);
+   background-color: var(--light-bg);
    width: 350px;
 }
 
@@ -197,7 +197,7 @@ body{
 
 .container .products .box-container .box .name{
    font-size: 20px;
-   color:var(--black);
+   color:var(--white);
    padding:5px 0;
 }
 
@@ -217,62 +217,169 @@ body{
    border:var(--border);
    border-radius: 5px;
    font-size: 20px;
-   color:var(--black);
+   color:var(--white);
+   background-color: var(--light-bg);
    padding:12px 14px
 }
+
+.container .products .box-container .box select[name="product_size"]{
+   margin:10px 0;
+   width: 100%;
+   border:var(--border);
+   border-radius: 5px;
+   font-size: 20px;
+   color:var(--white);
+   background-color: var(--light-bg);
+   padding:12px 14px
+}
+
 
 .container .shopping-cart{
    padding:20px 0;
 }
 
-.container .shopping-cart table{
-   width: 100%;
-   text-align: center;
-   border:var(--border);
-   border-radius: 5px;
-   box-shadow: var(--box-shadow);
-   background-color: var(--white);
+.container .shopping-cart .cart-items {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+   margin-bottom: 20px;
 }
 
-.container .shopping-cart table thead{
-   background-color: var(--black);
-}
-
-.container .shopping-cart table thead th{
-   padding:10px;
-   color:var(--white);
-   text-transform: capitalize;
-   font-size: 20px;
-}
-
-.container .shopping-cart table .table-bottom{
+.container .shopping-cart .cart-item {
+   display: flex;
+   align-items: center;
    background-color: var(--light-bg);
+   border-radius: 12px;
+   box-shadow: var(--box-shadow);
+   padding: 20px;
+   gap: 20px;
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.container .shopping-cart table tr td{
-   padding:10px;
+.container .shopping-cart .cart-item:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.container .shopping-cart .cart-item img {
+   width: 120px;
+   height: 120px;
+   object-fit: cover;
+   border-radius: 8px;
+   flex-shrink: 0;
+}
+
+.container .shopping-cart .item-details {
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+}
+
+.container .shopping-cart .item-details h3 {
    font-size: 20px;
-   color:var(--black);
+   color: var(--white);
+   margin: 0;
+   font-weight: 500;
 }
 
-.container .shopping-cart table tr td:nth-child(1){
-   padding:0;
+.container .shopping-cart .item-details .size {
+   color: var(--blue);
+   font-weight: bold;
 }
 
-.container .shopping-cart table tr td input[type="number"]{
-   width: 80px;
-   border:var(--border);
-   padding:12px 14px;
+.container .shopping-cart .item-details .price {
+   font-size: 18px;
+   color: var(--blue);
+   font-weight: bold;
+   margin: 0;
+}
+
+.container .shopping-cart .quantity-form {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   margin: 10px 0;
+}
+
+.container .shopping-cart .quantity-form input[type="number"] {
+   width: 70px;
+   padding: 8px 12px;
+   border: 1px solid #ddd;
+   border-radius: 6px;
+   font-size: 16px;
+   text-align: center;
+   background-color: var(--light-bg);
+   color: var(--white);
+}
+
+.container .shopping-cart .quantity-form .option-btn {
+   padding: 8px 16px;
+   font-size: 14px;
+}
+
+.container .shopping-cart .item-details .total {
+   font-size: 18px;
+   font-weight: bold;
+   color: var(--white);
+   margin: 5px 0;
+}
+
+.container .shopping-cart .cart-item .delete-btn {
+   background-color: var(--red);
+   color: var(--white);
+   padding: 8px 16px;
+   border-radius: 6px;
+   font-size: 14px;
+   text-align: center;
+   white-space: nowrap;
+   align-self: flex-start;
+}
+
+.container .shopping-cart .cart-total {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background-color: var(--light-bg);
+   padding: 20px;
+   border-radius: 12px;
+   box-shadow: var(--box-shadow);
+   margin: 20px 0;
+   font-size: 22px;
+   font-weight: bold;
+   color: var(--white);
+}
+
+.container .shopping-cart .cart-total p {
+   margin: 0;
+   font-size: 24px;
+}
+
+.container .shopping-cart .cart-total .delete-btn {
+   background-color: var(--red);
+   color: var(--white);
+   padding: 10px 20px;
+   border-radius: 6px;
+   font-size: 16px;
+}
+
+.container .shopping-cart .empty-cart {
+   text-align: center;
+   padding: 40px 20px;
+   background-color: var(--light-bg);
+   border-radius: 12px;
+   box-shadow: var(--box-shadow);
    font-size: 20px;
-   color:var(--black);
+   color: var(--white);
+   text-transform: capitalize;
 }
 
-.container .shopping-cart .cart-btn{
-   margin-top: 10px;
+.container .shopping-cart .cart-btn {
+   margin-top: 20px;
    text-align: center;
 }
 
-.container .shopping-cart .disabled{
+.container .shopping-cart .disabled {
    pointer-events: none;
    background-color: var(--red);
    opacity: .5;
@@ -280,13 +387,30 @@ body{
 }
 
 
-@media (max-width:1200px){
-   .container .shopping-cart{
-      overflow-x: scroll;
+@media (max-width:768px){
+   .container .shopping-cart .cart-item {
+      flex-direction: column;
+      text-align: center;
+      gap: 15px;
    }
 
-   .container .shopping-cart table{
-      width: 1200px;
+   .container .shopping-cart .cart-item img {
+      width: 100px;
+      height: 100px;
+   }
+
+   .container .shopping-cart .item-details {
+      align-items: center;
+   }
+
+   .container .shopping-cart .cart-total {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+   }
+
+   .container .shopping-cart .cart-total .delete-btn {
+      width: 100%;
    }
 }
 
@@ -297,4 +421,8 @@ body{
    .container .products .box-container .box img{
       height: 200px;
    }
-} 
+   .container .shopping-cart .cart-item img {
+      width: 80px;
+      height: 80px;
+   }
+}
